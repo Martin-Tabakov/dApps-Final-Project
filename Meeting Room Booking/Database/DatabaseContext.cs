@@ -14,9 +14,9 @@ namespace Meeting_Room_Booking.Database
 
         }
 
-        DbSet<Meet> Meets { get; set; }
-        DbSet<Employee> Employees { get; set; }
-        DbSet<BoardRoom> BoardRooms { get; set; }
+        public DbSet<Meet> Meets { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<BoardRoom> BoardRooms { get; set; }
 
         public static void Seed(IServiceProvider applicationServices)
         {
