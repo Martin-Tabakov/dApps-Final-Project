@@ -6,6 +6,7 @@ namespace Meeting_Room_Booking.Models.Entities
 {
     public class Meet
     {
+        [Key]
         public Guid Id { get; set; }
 
         [Required]
@@ -15,10 +16,12 @@ namespace Meeting_Room_Booking.Models.Entities
         [Required]
         public DateTime EndTime { get; set; }
 
+        public Guid BoardRoomId { get; set; }
         public virtual BoardRoom BoardRoom { get; set; }
 
         public virtual List<Employee> Participants { get; set; }
 
+        public Guid ReserverId { get; set; }
         public virtual Employee Reserver { get; set; }
 
         public bool IsMandatory { get; set; }

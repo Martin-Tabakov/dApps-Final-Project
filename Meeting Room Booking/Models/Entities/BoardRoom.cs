@@ -5,6 +5,7 @@ namespace Meeting_Room_Booking.Models.Entities
 {
     public class BoardRoom
     {
+        [Key]
         public Guid Id { get; set; }
 
         [Required]
