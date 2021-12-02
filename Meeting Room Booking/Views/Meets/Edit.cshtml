@@ -23,6 +23,16 @@
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="BoardRoomId" class="control-label"></label>
+                <select asp-for="BoardRoomId" class="form-control" asp-items="ViewBag.BoardRoomId"></select>
+                <span asp-validation-for="BoardRoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReserverId" class="control-label"></label>
+                <select asp-for="ReserverId" class="form-control" asp-items="ViewBag.ReserverId"></select>
+                <span asp-validation-for="ReserverId" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsMandatory" /> @Html.DisplayNameFor(model => model.IsMandatory)

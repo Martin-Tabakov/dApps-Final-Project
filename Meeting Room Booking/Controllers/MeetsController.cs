@@ -22,7 +22,8 @@ namespace Meeting_Room_Booking.Controllers
         // GET: Meets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Meets.ToListAsync());
+            var databaseContext = _context.Meets.Include(m => m.BoardRoom).Include(m => m.Reserver);
+            return View(await databaseContext.ToListAsync());
         }
 
         // GET: Meets/Details/5
@@ -34,6 +35,8 @@ namespace Meeting_Room_Booking.Controllers
             }
 
             var meet = await _context.Meets
+                .Include(m => m.BoardRoom)
+                .Include(m => m.Reserver)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (meet == null)
             {
@@ -46,6 +49,8 @@ namespace Meeting_Room_Booking.Controllers
         // GET: Meets/Create
         public IActionResult Create()
         {
+            ViewData["BoardRoomId"] = new SelectList(_context.BoardRooms, "Id", "Location");
+            ViewData["ReserverId"] = new SelectList(_context.Employees, "Id", "FirstName");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace Meeting_Room_Booking.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,StartTime,EndTime,IsMandatory")] Meet meet)
+        public async Task<IActionResult> Create([Bind("Id,StartTime,EndTime,BoardRoomId,ReserverId,IsMandatory")] Meet meet)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +68,8 @@ namespace Meeting_Room_Booking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BoardRoomId"] = new SelectList(_context.BoardRooms, "Id", "Location", meet.BoardRoomId);
+            ViewData["ReserverId"] = new SelectList(_context.Employees, "Id", "FirstName", meet.ReserverId);
             return View(meet);
         }
 
@@ -79,6 +86,8 @@ namespace Meeting_Room_Booking.Controllers
             {
                 return NotFound();
             }
+            ViewData["BoardRoomId"] = new SelectList(_context.BoardRooms, "Id", "Location", meet.BoardRoomId);
+            ViewData["ReserverId"] = new SelectList(_context.Employees, "Id", "FirstName", meet.ReserverId);
             return View(meet);
         }
 
@@ -87,7 +96,7 @@ namespace Meeting_Room_Booking.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,StartTime,EndTime,IsMandatory")] Meet meet)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,StartTime,EndTime,BoardRoomId,ReserverId,IsMandatory")] Meet meet)
         {
             if (id != meet.Id)
             {
@@ -114,6 +123,8 @@ namespace Meeting_Room_Booking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["BoardRoomId"] = new SelectList(_context.BoardRooms, "Id", "Location", meet.BoardRoomId);
+            ViewData["ReserverId"] = new SelectList(_context.Employees, "Id", "FirstName", meet.ReserverId);
             return View(meet);
         }
 
@@ -126,6 +137,8 @@ namespace Meeting_Room_Booking.Controllers
             }
 
             var meet = await _context.Meets
+                .Include(m => m.BoardRoom)
+                .Include(m => m.Reserver)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (meet == null)
             {
