@@ -9,6 +9,7 @@ namespace Meeting_Room_Booking.Models.Entities
         public Guid Id { get; set; }
 
         [Required]
+        [DataType(DataType.Time)]
         public DateTime StartTime { get; set; }
 
         [Required]
@@ -18,7 +19,7 @@ namespace Meeting_Room_Booking.Models.Entities
 
         public virtual List<Employee> Participants { get; set; }
 
-        public Employee Reserver { get; set; }
+        public virtual Employee Reserver { get; set; }
 
         public bool IsMandatory { get; set; }
 
